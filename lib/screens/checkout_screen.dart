@@ -15,7 +15,7 @@ class CheckoutScreen extends StatelessWidget {
         child: ValueListenableBuilder<Map<String,int>>(
           valueListenable: cart.itemsNotifier,
           builder: (context,items,_){
-            final totalItems=items.values.fold<int>(0,(sum,q)=>sum+q);
+            //final totalItems=items.values.fold<int>(0,(sum,q)=>sum+q);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

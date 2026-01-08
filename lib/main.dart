@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/root_screen.dart';
-
+import 'screens/auth/login_screen.dart';
+import 'screens/auth/register_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
       ),
       home: const  RootScreen(),
-        
+      routes: {
+        '/login': (_)=> const LoginScreen(),
+        '/reigster': (_)=>const RegisterScreen(),
+      }
       );
   }
 }

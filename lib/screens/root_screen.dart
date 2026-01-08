@@ -3,7 +3,7 @@ import 'cart_screen.dart';
 import 'profile/profile_screen.dart';
 import 'search_screen.dart';
 import 'package:flutter/material.dart';
-
+import '../services/auth_service.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -51,6 +51,12 @@ class _RootScreenState extends State<RootScreen> {
         elevation: 10,
         height: kBottomNavigationBarHeight,
         onDestinationSelected: (index) {
+          final auth=AuthService.instance;
+          final needsLogin= (index==2 || index==3);
+          if(needsLogin && !auth.isLoggedIn){
+            Navigator.pushNamed(context,'/login');
+            return;
+          }
           setState(() => currentScreen = index);
           controller.jumpToPage(currentScreen);
         },

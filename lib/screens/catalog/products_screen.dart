@@ -11,6 +11,8 @@ class ProductsScreen extends StatelessWidget {
       appBar: AppBar(title: Text(title)),
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
+
+        //za sad 8 proizvoda u svakoj kategoriji jer nema bekenda
         itemCount: 8,
         separatorBuilder: (_, __) => const SizedBox(height: 12),
         itemBuilder: (context, i) {
