@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import '../../services/cart_service.dart';
 import '../../services/wishlist_service.dart';
+import '../../model/product.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final String name;
-  final double price;
+  //final String name;
+  //final double price;
+  final Product product;
 
   const ProductDetailsScreen({
     super.key,
-    required this.name,
-    required this.price,
+   // required this.name,
+    //required this.price,
+    required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
+    final name=product.name;
+    final price= product.price;
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
@@ -42,14 +47,23 @@ class ProductDetailsScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: const Center(child: Icon(Icons.image, size: 60)),
+              child: Center(
+                child: Image.asset(
+                  product.imageAsset,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_,__,___)=>
+                      const Icon(Icons.image, size:60),
+                ) ,
+              ),
             ),
             const SizedBox(height: 16),
-            Text(name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(
+              name, 
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             Text('${price.toStringAsFixed(2)} €', style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 16),
-            const Text('Description (placeholder).'),
+            Text(product.description),
             const Spacer(),
             SizedBox(
               width: double.infinity,

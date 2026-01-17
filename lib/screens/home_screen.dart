@@ -56,7 +56,16 @@ class HomeScreen extends StatelessWidget {
                 'Shop by Category',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              TextButton(onPressed: () {}, child: const Text('View All')),
+              TextButton(onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                     builder: (_) => const ProductsScreen(
+                      title: 'All products',
+                     ),
+                  ),
+                );
+              }, child: const Text('View All')),
             ],
           ),
 
@@ -66,6 +75,9 @@ class HomeScreen extends StatelessWidget {
             height: 92,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              primary: false,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: categories.length,
               separatorBuilder: (_, __) => const SizedBox(width: 12),
               itemBuilder: (context, i) {

@@ -24,8 +24,6 @@ class AuthService{
     _email = 'admin@groceryshop.com';
     roleNotifier.value = UserRole.admin;
   }
-
-
   void logout(){
     _name = null;
     _email = null;
