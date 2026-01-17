@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'catalog/products_screen.dart';
+import 'search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,32 +22,19 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Search (demo)')),
-              );
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                   builder: (_) => const SearchScreen(),
+             ),
+               );
             },
-          )
+          ),
         ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Fake search bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.search),
-                SizedBox(width: 10),
-                Text('Search for products'),
-              ],
-            ),
-          ),
-
           const SizedBox(height: 16),
 
           Row(

@@ -7,6 +7,7 @@ class AuthService{
   static final instance= AuthService._();
   String? _name;
   String? _email;
+  //String? moze da prihvata null
 
   final ValueNotifier<UserRole> roleNotifier= ValueNotifier(UserRole.guest);
 
