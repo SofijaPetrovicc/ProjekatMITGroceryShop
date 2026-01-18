@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'catalog/products_screen.dart';
 import 'search_screen.dart';
+import '../data/mock_products.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,23 @@ class HomeScreen extends StatelessWidget {
       ("Drinks", Icons.local_drink_outlined),
     ];
 
+    //ovo mi treba za baner
+    //uzimam sve proizovde i prolazim kroz njih jedan po jedan i uzimam samo one cija je kategorija produce
+    //pravim novu listu tih proizvoda
+    final producePicks= mockProducts
+          .where((p)=>p.category.toLowerCase()== 'produce')
+          .toList();
+          //ako ima bar jedan produce uzmi ga, ako ne onda prvi proizvod
+    final pick=producePicks.isNotEmpty ? producePicks.first:mockProducts.first;
+   // final featured= mockProducts.take(4).toList();
+
+    final featuredCategories=['meat','fruits','produce','diary'];
+    final featured=featuredCategories.map((cat){
+          return mockProducts.firstWhere(
+            (p)=>p.category.toLowerCase()==cat,
+            orElse: ()=> mockProducts.first,
+          );
+    }).toList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('GroceryShop'),
@@ -105,6 +123,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Banner placeholder
+          /*
           Container(
             height: 120,
             padding: const EdgeInsets.all(16),
@@ -124,7 +143,57 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+        */
 
+        InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute( 
+                builder: (_)=> const ProductsScreen(title: 'Produce'),
+              ),
+              );
+          },
+          child: Container(
+            height: 120,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                     mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                        const Text(
+                          'Fresh from Produce',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          pick.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height:2),
+                        Text(
+                          pick.description,
+                          maxLines:1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                    ),
+                  ),
+                  const Icon(Icons.eco,size:44),
+              ],
+              ),
+          ),
+        ),
           const SizedBox(height: 16),
 
           const Text(
@@ -137,7 +206,8 @@ class HomeScreen extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
+           // itemCount: 4,
+           itemCount: featured.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 0.82,
@@ -145,6 +215,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisSpacing: 12,
             ),
             itemBuilder: (context, i) {
+              final p=featured[i];
               return Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -153,18 +224,32 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children:  [
                     Expanded(
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(12)),
-                        child: ColoredBox(color: Colors.black12),
+                       // child: ColoredBox(color: Colors.black12),
+                          child: Image.asset(
+                            p.imageAsset,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
                       ),
                     ),
                     SizedBox(height: 8),
-                    Text('Product name', maxLines: 1, overflow: TextOverflow.ellipsis,
+                   /* Text('Product name', maxLines: 1, overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(height: 4),
                     Text('1.99 €'),
+                    */
+                    Text(
+                      p.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text('${p.price.toStringAsFixed(2)}€'),
                   ],
                 ),
               );
