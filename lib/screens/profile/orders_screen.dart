@@ -98,6 +98,9 @@ class OrdersScreen extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(_formatDate(order.createdAt)),
                     const SizedBox(height: 8),
+                    Text('By: ${order.customerName}'),
+                    Text(order.customerEmail),
+                    const SizedBox(height: 8),
                     Text('Items: ${order.totalItems}'),
                     const SizedBox(height: 10),
 

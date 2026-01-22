@@ -8,11 +8,14 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState()=> _LoginScreenState();
 }
-class _LoginScreenState extends State<LoginScreen>{
-  final _emailController= TextEditingController();
-  final _passController= TextEditingController();
-  bool _obscure=true;
 
+//sve sto se menja ide ovde, unosom teksta/klikom na dugme menja se stanje ekrana
+class _LoginScreenState extends State<LoginScreen>{
+  final _emailController= TextEditingController(); //pamti sta korisnik kuca u email polje
+  final _passController= TextEditingController();
+  bool _obscure=true; //da li je lozinka skrivena
+
+//texteditingcontroller sluzi za cuvanje i citanje unosa korisnika iz tekstualnih polja
 
 @override
   void dispose(){
@@ -35,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen>{
     if(email.contains('admin')){
       auth.loginAsAdmin();
     }else {
-      auth.loginAsUser();
+      auth.loginAsUser(email:email);
     }
 
     Navigator.pop(context);
@@ -98,6 +101,8 @@ class _LoginScreenState extends State<LoginScreen>{
                             labelText: 'Password',
                             prefixIcon: const Icon(Icons.lock_outline),
                             suffixIcon: IconButton(
+                              //Klikom na oko menja se stanje koje kontroliše da li je lozinka sakrivena, 
+                              //a setState pokreće ponovno iscrtavanje UI-ja i ikone
                               onPressed: () => setState(() => _obscure = !_obscure),
                               icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
                             ),
@@ -122,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen>{
 
                         const SizedBox(height: 4),
                         Text(
-                          'Demo: use email containing "admin" for admin role.',
+                          'use email containing "admin" for admin role.',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant),
                         ),
